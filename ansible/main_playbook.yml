@@ -1,0 +1,39 @@
+---
+########### --- This playbook upgrades all hosts and starts all playbooks distinctly --- #########
+# If you use cloud services as host such as aws.databases RECAP might end with errors no matter how successfull
+# this is due to connection or update/upgrade commands not doable on services
+
+# Run APT UPDATE & APT UPGRADE
+- name: Run UPDATE and UPGRADE
+  hosts: all
+  tasks:
+#	 update
+   - name: Run UPDATE
+     apt: update_cache=yes force_apt_get=yes cache_valid_time=3600
+#	upgrade
+   - name: Run UPGRADE
+     apt: upgrade=dist force_apt_get=yes
+
+# start playbook that will install and config HAPROXY on host frontend
+- import_playbook: ./playbooks/haproxy_playbook.yml
+
+# start playbook that will install and config NGINX on backends
+- import_playbook: ./playbooks/nginx_playbook.yml
+
+# start playbook that will install and config a SHARED NFS on frontend and MOUNT it on backends
+- import_playbook: ./playbooks/nfs_playbook.yml
+
+# start playbook that will install and config DOCKER
+- import_playbook: ./playbooks/docker_playbook.yml
+
+# start playbook that will install start a container with app IFCONFIG.IO from a gitclone
+# 	Docker's packages should be installed from docker playbook
+# 	playbook's order cannot change except if moving the install part from other playbook
+- import_playbook: ./playbooks/ifconfig_container_playbook.yml
+
+# start playbook that will install and config a WORDPRESS container.
+
+- import_playbook: ./playbooks/wordpress_playbook.yml
+
+# start playbook that will install and config IPTABLES on front and backend
+- import_playbook: ./playbooks/iptables_playbook.yml

@@ -1,0 +1,38 @@
+---
+backend_gra:
+  hosts:
+    141.94.169.227:
+      ansible_user: debian
+      ansible_become: True
+    141.94.174.237:
+      ansible_user: debian
+      ansible_become: True
+    57.128.16.139:
+      ansible_user: debian
+      ansible_become: True
+front_gra:
+  hosts:
+    162.19.70.212:
+      ansible_user: debian
+      ansible_become: True
+backend_sbg:
+  hosts:
+    51.91.149.248:
+      ansible_user: debian
+      ansible_become: True
+    51.83.35.112:
+      ansible_user: debian
+      ansible_become: True
+    51.91.211.108:
+      ansible_user: debian
+      ansible_become: True
+databases:
+  hosts:
+    mysql-c40bfbc9-o5d5bb6d4.database.cloud.ovh.net:
+      ansible_user: eductive07
+      ansible_become: True
+      ansible_password: AVNS_YySlfRI9bVegFAToz-V
+  vars:
+    db_hostname: mysql-c40bfbc9-o5d5bb6d4.database.cloud.ovh.net
+    db_wordpress: db_wordpress
+    db_port: 20184

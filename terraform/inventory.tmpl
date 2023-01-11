@@ -1,0 +1,30 @@
+---
+backend_gra:
+  hosts:
+%{ for node in nodes_backend_gra ~}
+    ${node}:
+      ansible_user: debian
+      ansible_become: True
+%{ endfor ~}
+front_gra:
+  hosts:
+    ${nodes_front_gra}:
+      ansible_user: debian
+      ansible_become: True
+backend_sbg:
+  hosts:
+%{ for node in nodes_backend_sbg ~}
+    ${node}:
+      ansible_user: debian
+      ansible_become: True
+%{ endfor ~}
+databases:
+  hosts:
+    ${nodes_db_service}:
+      ansible_user: ${nodes_db_username}
+      ansible_become: True
+      ansible_password: ${nodes_db_password}
+  vars:
+    db_hostname: ${nodes_db_service}
+    db_wordpress: ${nodes_db_wordpress}
+    db_port: ${nodes_db_port}
