@@ -15,6 +15,7 @@
 ./ansible/inventory.yml
 ./ansible/terraform.tfstate
 ./ansible/cleanup_playbook.yml
+
 # Just in case
 openrc.sh
 **/openrc.sh
