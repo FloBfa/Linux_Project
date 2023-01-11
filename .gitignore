@@ -5,6 +5,7 @@
 .terraform.d
 *.tfstate
 *.tfstate.*
+terraform/terraform_bin
 
 # Dynamic inventory
 ansible/inventory.yml
