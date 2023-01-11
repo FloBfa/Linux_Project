@@ -13,7 +13,8 @@ Here's the Linux Project result for eductive07.
 	* Use docker to deploy :
 			* Ifconfig.io on backends
 			* Wordpress on backends (shared in NFS folder)
-![explain](https://imgur.com/a/go4IDn7)
+
+<img src="./schema_projet.jpg" alt="Explaination" title="Explaination">
 
 # Important infos
 ### Terraform was used with binary file (not installed)
