@@ -9,7 +9,8 @@ terraform/terraform_bin
 ./terraform/terraform.tfstate
 ./terraform/terraform.tfstate.backup
 ./terraform/openrc.sh
-terraform/.terraform_lock.hcl
+terraform/.terraform.lock.*
+
 
 # Dynamic inventory
 ansible/inventory.yml

@@ -1,0 +1,40 @@
+---
+### ---- DOCKER ON BACKEND - IFCONFIG.IO app ---- ###
+# Create a container containing a defaut app
+# for now app is ifconfig.io
+
+- name: RUNNING DOCKER IFCONFIG
+  hosts: backend_*
+  vars:
+#	Define variables for fast changing app or repo
+    defaut_git_repo: https://github.com/georgyo/ifconfig.io/
+    defaut_app_name: ifconfig.io
+    defaut_git_folder: /build/{{ defaut_app_name }}
+  tasks:
+#	Create a directory /build to handle apps
+    - name: Create a directory /build
+      ansible.builtin.file:
+        path: /build
+        state: directory
+#	folder's rights as chmod
+        mode: '0755'
+#	Create /build/'app_name'
+    - name: Create a directory with app name
+      ansible.builtin.file:
+        path: "{{ defaut_git_folder }}"
+        state: directory
+        mode: '0755'
+#	Clone github repo that contains the targeted app
+    - name: Clone a defaut github repository
+      git:
+        repo: "{{  defaut_git_repo  }}"
+        dest: "{{ defaut_git_folder }}"
+        # true should be replaced by yes
+        clone: true
+        update: true
+#	Use command "docker compose up" in app's folder.
+# 	docker_playbook is mandatory before this task
+    - name: Start docker compose UP
+      docker_compose:
+        project_src: "{{  defaut_git_folder  }}"
+        state: present
