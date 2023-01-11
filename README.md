@@ -129,8 +129,7 @@ You may need to clean your ssh known hosts due to replicated ip
 > > terraform show
 
 > clean this file :
-> > rm  ~/.ssh/known_hosts
-> >nano/vi   ~/.ssh/known_hosts
+> > rm/nano/vi  ~/.ssh/known_hosts
 
 > For cleaning a single Ip  :
 > >ssh-keygen -f ~/.ssh/known_hosts -R [already used IP]
