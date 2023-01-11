@@ -1,0 +1,86 @@
+This document gather every command I used during tests
+It might contain unusable ansible commands
+Might be usefull for futur purposes
+
+#### ---------- DOCKER INSTALL AND IFCONFIG CONTAINER
+
+#    - name: Pull default Docker image
+#      community.docker.docker_image:
+#        name: gaoyifan/ifconfig-io
+#        source: pull
+#    - name: Create default containers
+#      community.docker.docker_container:
+#        name: ifconfig_io
+#        image: gaoyifan/ifconfig-io
+#        command: sleep 5s
+#        state: present
+#        ports:
+#          - "8080:9000"
+#    - name: create build directory
+#      file:
+#        path: /home/debian/docker_directory
+#        state: directory
+#        owner: debian
+#        group: debian
+#        mode: '0755'
+#    - name: copy Dockerfile
+#      copy:
+#        src: ./docker/Dockerfile
+#        dest: /home/debian/docker_directory/Dockerfile
+#        owner: debian
+#        group: debian
+#        mode: '0644'
+#    - name: deploy ifconfig docker container
+#      docker_container:
+#       image: ifconfig.io:latest
+#        name: ifconfig
+#        state: started
+#        auto_remove: true
+#        ports:
+#          - "8080:80"
+#    - name: build container image
+#      docker_image:
+#        name: ifconfig.io:latest
+#        build:
+#          path: /home/debian/docker_directory/
+#          source: build
+#        state: present
+#    - name: create build directory
+#      file:
+#        path: /home/debian/docker_directory
+#        state: directory
+#        owner: debian
+#        group: debian
+#        mode: '0755'
+#    - name: copy Dockerfile
+#      copy:
+#        src: ./docker/Dockerfile
+#        dest: /home/debian/docker_directory/Dockerfile
+#        owner: debian
+#        group: debian
+#        mode: '0644'
+#    - name: deploy ifconfig docker container
+#      docker_container:
+#       image: ifconfig.io:latest
+#        name: ifconfig
+#        state: started
+#        auto_remove: true
+#        ports:
+#          - "8080:80"
+#    - name: build container image
+#      docker_image:
+#        name: ifconfig.io:latest
+#        build:
+#          path: /home/debian/docker_directory/
+#          source: build
+#        state: present
+
+############# NFS Playbook
+# DOESNT WORK SINCE DEBIAN IMAGE UPDATE IN OVH
+#      ansible.posix.mount:
+#        src: "{{ip_priv_front}}"
+#        path: /home/wordpress-data
+#        fstype: nfs
+#        state: mounted
+
+

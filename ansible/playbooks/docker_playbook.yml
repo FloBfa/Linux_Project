@@ -1,0 +1,52 @@
+---
+### ---- DOCKER ON BACKEND - Package installation ---- ###
+- name: Install packages
+  hosts: backend_*
+  tasks:
+# 	Install apt-transport-https
+    - name: Install apt-transport-https
+      apt:
+        name: apt-transport-https
+        state: latest
+# 	Install ca-certificates
+    - name: Install ca-certificates
+      apt:
+        name: ca-certificates
+        state: latest
+# 	Install lsb-release
+    - name: Install lsb-release
+      apt:
+        name: lsb-release
+        state: latest
+# 	Install gnupg
+    - name: Install gnupg
+      apt:
+        name: gnupg
+        state: latest
+# 	Download apt-key from docker
+    - name: Download apt-key from docker
+      ansible.builtin.get_url:
+        url: https://download.docker.com/linux/debian/gpg
+        dest: /etc/apt/trusted.gpg.d/docker.asc
+# 	Add docker to repository list
+    - name: Add  docker repository to source list
+      ansible.builtin.apt_repository:
+        repo: deb https://download.docker.com/linux/debian bullseye stable
+        state: present
+# 	Install Docker package
+    - name: Install docker
+      apt:
+        name: docker
+        state: latest
+# 	Install docker-compose package
+    - name: Install docker-compose
+      apt:
+        name: docker-compose
+        state: latest
+#	Install docker-compose plugin
+    - name: Install docker-compose-plugin
+      apt:
+        name: docker-compose-plugin
+        state: latest
+
+### You should be able to use command 'docker-compose up'

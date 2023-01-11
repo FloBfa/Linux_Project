@@ -1,0 +1,60 @@
+---
+### --- CREATE and MOUNT NFS Share --- ###
+# This playbook install nfs packages on front and backend
+# Then create a nfs share on front
+# and mount this share on backends
+
+#	Install required packages on frontend
+- name: Install NFS on front
+  hosts: front_gra
+  tasks:
+    - name: Install nfs-kernel-server
+      apt:
+        name: nfs-kernel-server
+        state: latest
+    - name: Install nfs-common
+      apt:
+        name: nfs-common
+        state: latest
+# 	Create folder that will be used as mounted share
+    - name: Create shared folder
+      file:
+        path: /home/wordpress-data
+        mode: '0777'
+        state: directory
+#	Copy export.j2 that contain nfs config (ACL, rights...)
+    - name: Copy NFS config file
+      template:
+        src: ../templates/nfs/exports.j2
+        dest: /etc/exports
+#	Restart NFS server service
+    - name: Restart NFS server service
+      service:
+        name: nfs-kernel-server
+        state: reloaded
+# -- FRONTEND END -- #
+
+
+### --- MOUNT front's share on BACKEND --- ###
+- name: Install and deploy NFS on backends
+  hosts: backend_*
+  vars:
+# 	This loop is used to get front's private IP
+#	from inventory's host's ansible facts
+#		use to write front's IP in NFS command
+    ip_priv_front: "{% for front in groups.front_gra -%} {{ hostvars[front].ansible_ens4.ipv4.address }}:/home/wordpress-data  {% endfor -%}"
+  tasks:
+#	Install nfs-common
+    - name: Install required system packages
+      apt:
+        name: nfs-common
+        state: latest
+# 	Create folder that will contain share
+    - name: Create the folder
+      file:
+        path: /home/wordpress-data
+        mode: '0777'
+        state: directory
+#	Mount command, based on front's IP and mounted in created folder
+    - name: Mount NFS folder
+      command: mount -t nfs {{ip_priv_front}} /home/wordpress-data/
