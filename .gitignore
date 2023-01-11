@@ -5,16 +5,16 @@
 .terraform.d
 *.tfstate
 *.tfstate.*
-./terraform/terraform_bin
+terraform/terraform_bin
 ./terraform/terraform.tfstate
 ./terraform/terraform.tfstate.backup
 ./terraform/openrc.sh
-./.terraform_lock.hcl
+terraform/.terraform_lock.hcl
 
 # Dynamic inventory
-./ansible/inventory.yml
-./ansible/terraform.tfstate
-./ansible/cleanup_playbook.yml
+ansible/inventory.yml
+ansible/terraform.tfstate
+ansible/cleanup_playbook.yml
 
 # Just in case
 openrc.sh
