@@ -92,20 +92,6 @@
 # append at the end of fw sequence
     - name: Outgoing everything
       command: iptables -A OUTPUT -j ACCEPT
-      
-#    - name: Outgoing tcp:80 - nginx
-#      command: iptables -A OUTPUT -p tcp --sport 80 -j ACCEPT
-#    - name: Outgoing tcp:81 - nginx
-#      command: iptables -A OUTPUT -p tcp --sport 81 -j ACCEPT
-#    - name: Outgoing tcp:82 - wordpress
-#      command: iptables -A OUTPUT -p tcp --sport 82 -j ACCEPT
-#    - name: Outgoing tcp:8500 - ifconfig
-#      command: iptables -A OUTPUT -p tcp --sport 8500 -j ACCEPT
-#    - name: Outgoing tcp:8080 - monitoring
-#      command: iptables -A OUTPUT -p tcp --sport 8080 -j ACCEPT
-#     Blackhole everything else
-#    - name: Outgoing alls left drop
-#      command: iptables -A OUTPUT -j DROP
 
 ### --- IP TABLES on  BACKEND --- ###
 - name: Backends firewalling INPUT
@@ -125,15 +111,6 @@
       command: iptables -A INPUT -i ens4 -j ACCEPT
     - name: Coming from front public ip
       command: iptables -A INPUT -p tcp -s {{front_ip}} -j ACCEPT
-#    - name: Coming from front tcp:80 - nginx
-#      command: iptables -A INPUT -p tcp -s {{front_ip}} --dport 80 -j ACCEPT
-#    - name: Coming from front tcp:81 - nginx
-#      command: iptables -A INPUT -p tcp -s {{front_ip}} --dport 81 -j ACCEPT
-#    - name: Coming from front tcp:82 - wordpress
-#      command: iptables -A INPUT -p tcp -s {{front_ip}} --dport 82 -j ACCEPT
-#    - name: Coming from front tcp:8500 - ifconfig
-#      command: iptables -A INPUT -p tcp -s {{front_ip}} --dport 8500 -j ACCEPT
-
 
 #     Blackhole everything else
     - name: Coming alls left drop
@@ -154,4 +131,3 @@
       command: iptables -A OUTPUT -d {{front_ip}} -j ACCEPT
     - name: Coming everything to int ens4
       command: iptables -A INPUT -i ens4 -j ACCEPT
-
